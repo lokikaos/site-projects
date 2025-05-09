@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liner Notes</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Quattrocento&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/liner-style.css" />
+  </head>
+  <body class="fade-in">
+    <div class="liner-container">
+      <h1 class="liner-title">Liner Notes</h1>
+
+      <div class="track-list-grid">
+        <ul class="track-column">
+          <li>1. My Funny Valentine – Chet Baker</li>
+          <li>2. The Crystal Ship – The Doors</li>
+          <li>3. Track A – Solo Dancer – Charles Mingus</li>
+          <li>4. Don’t Talk – The Beach Boys</li>
+          <li>5. Blue in Green – Miles Davis</li>
+        </ul>
+        <ul class="track-column">
+          <li>6. Alone Together – Chet Baker</li>
+          <li>7. Naima – John Coltrane</li>
+          <li>8. Return to Me – Dean Martin</li>
+          <li>9. I’ll Be Your Mirror – The Velvet Underground</li>
+          <li>10. God Only Knows – The Beach Boys</li>
+        </ul>
+      </div>
+
+      <p class="liner-text">
+        This mixtape was a map through Holden Caulfield’s world, used not just
+        to mark where he walks, but to represent what he truly, genuinely feels.
+        Each track mirrors a chapter of his unraveling life circumstances, the
+        detachment, the longing for innocence, and the desperate grasps for
+        love. This mixtape acts to be the words which were never spoken by
+        Holden, ones of unbridled truth and sincerity. I hope it is through this
+        mixtape that viewers are able to immerse themselves within the world of
+        Holden a bit better, and truly understand the feelings that he was
+        experiencing as a Catcher In The Rye.
+      </p>
+
+      <p class="liner-text credit">
+        Compiled by Loki Zorrilla, curated for The Catcher In The Rye.<br />
+        All songs belong to their respective artists.
+      </p>
+
+      <div class="nav-buttons">
+        <button onclick="window.location.href='track10.html'">
+          ◀ Back to Track 10
+        </button>
+        <button onclick="window.location.href='index.html'">Home ⏏</button>
+      </div>
+    </div>
+
+    <canvas id="grain-canvas"></canvas>
+    <div class="scanline-overlay"></div>
+    <script>
+      const canvas = document.getElementById("grain-canvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      function drawGrain() {
+        const imageData = ctx.createImageData(canvas.width, canvas.height);
+        const buffer = new Uint32Array(imageData.data.buffer);
+        const len = buffer.length;
+
+        for (let i = 0; i < len; i++) {
+          if (Math.random() < 0.05) buffer[i] = 0xffffffff;
+        }
+
+        ctx.putImageData(imageData, 0, 0);
+      }
+
+      function trackingGlitch() {
+        const y = Math.floor(Math.random() * canvas.height);
+        const height = Math.floor(Math.random() * 10 + 2);
+        const imageData = ctx.getImageData(0, y, canvas.width, height);
+        const shift = Math.floor(Math.random() * 10 - 5);
+        ctx.putImageData(imageData, shift, y);
+      }
+
+      function applyFlicker() {
+        canvas.style.opacity = 0.05 + Math.random() * 0.03;
+      }
+
+      function render() {
+        drawGrain();
+        if (Math.random() < 0.15) trackingGlitch();
+        applyFlicker();
+      }
+
+      setInterval(render, 50);
+    </script>
+  </body>
+</html>

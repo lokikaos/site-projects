@@ -1,0 +1,169 @@
+@font-face {
+  font-family: "Typewriter";
+  src: url("../fonts/JMH\ Typewriter.ttf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "IM Fell English", serif;
+  background-color: #0e1a1f; /* dark and foggy */
+  color: #dddcd5;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  animation: slideIn 0.8s ease forwards;
+}
+
+.track-title {
+  font-family: "Typewriter", sans-serif;
+  font-size: 2.8rem;
+  color: #4e6854;
+  letter-spacing: 3px;
+}
+
+.progress-container {
+  width: 300px;
+  height: 6px;
+  background-color: #3e3226;
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 20px auto 0;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: #4e6854;
+  transition: width 0.2s linear;
+}
+
+.track-container {
+  text-align: center;
+  max-width: 600px;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #770f1d;
+}
+
+.album-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.album-art {
+  width: 300px;
+  transition: box-shadow 0.3s ease;
+}
+
+.album-art:hover {
+  box-shadow: 0 0 15px #1c2a2f;
+  cursor: pointer;
+}
+
+.play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: #a8896e;
+  pointer-events: none;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+  font-family: sans-serif;
+}
+
+.play-icon.hidden {
+  opacity: 0;
+}
+
+@keyframes spinVinyl {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+p {
+  line-height: 1.6;
+  font-size: 1rem;
+  color: #e6e1d6;
+}
+
+.nav-buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-buttons button {
+  font-size: 1rem;
+  padding: 10px 20px;
+  font-family: "Stardos Stencil", serif;
+  background-color: #e0d8c3;
+  color: #1e2330;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.nav-buttons button:hover {
+  background-color: #fff;
+}
+
+#grain-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.07;
+}
+
+.scanline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.3;
+  background: url("../images/scanlines.png") repeat;
+  background-size: 100% 2px;
+  animation: scrollScanlines 0.5s linear infinite;
+}
+
+@keyframes scrollScanlines {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 4px;
+  }
+}
+
+/* Slide-in effect */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

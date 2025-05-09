@@ -1,0 +1,245 @@
+/* === Reset === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* === Background + Layout === */
+body {
+  font-family: "Stardos Stencil", serif;
+  background-color: #1e2330;
+  color: #e0d8c3;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: opacity 0.8s ease;
+
+  background-image: repeating-radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.012) 1px,
+      transparent 2px
+    ),
+    repeating-radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.01) 1px,
+      transparent 3px
+    );
+  background-size: 4px 4px, 3px 3px;
+  background-position: 0 0, 1px 1px;
+}
+
+.liner-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #e0d8c3;
+  color: #1e2330;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-family: "Playfair Display", serif;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  z-index: 10000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+
+.liner-button:hover {
+  opacity: 1;
+  background-color: #f1e9d4;
+  cursor: pointer;
+}
+
+/* === Scanlines === */
+
+.scanline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.3;
+  background: url("../images/scanlines.png") repeat;
+
+  background-size: cover;
+  animation: scrollScanlines 0.5s linear infinite;
+  background-size: 100% 2px;
+}
+
+@keyframes scrollScanlines {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 4px;
+  }
+}
+
+body.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-out {
+  opacity: 0 !important;
+  transition: opacity 0.8s ease;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9998;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.05) 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+  opacity: 0.12;
+  animation: scanlinesScroll 2s linear infinite;
+}
+
+@keyframes flickerLines {
+  0%,
+  100% {
+    opacity: 0.07;
+  }
+  50% {
+    opacity: 0.12;
+  }
+}
+
+#scanline-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9998; /* below grain canvas but above content */
+  pointer-events: none;
+  opacity: 0.08;
+}
+
+/* === Typography === */
+h1 {
+  font-size: 2.6em;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  color: #e0d8c3;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-weight: 900;
+  font-size: 2rem;
+  letter-spacing: 2px;
+  margin-top: -10px;
+}
+
+/* === Cassette Image === */
+
+.cassette-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.invisible-play-button {
+  position: absolute;
+  bottom: 130px; /* adjust depending on image */
+  left: 50%;
+  transform: translateX(-53%);
+  width: 125px; /* adjust to fit over the play button */
+  height: 38px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.invisible-play-button:hover {
+  outline: 4px solid #e0d8c3;
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+.cassette-img {
+  width: 420px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  pointer-events: none;
+}
+
+/* .cassette-img:hover {
+  transform: scale(1.05);
+} */
+
+/* === Content Layout === */
+.content {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* === CRT Effect Wrapper === */
+.crt-wrapper {
+  position: relative;
+  z-index: 0;
+  animation: crtDistort 2s infinite ease-in-out;
+  transform-origin: center;
+  will-change: transform;
+  filter: contrast(1.1) brightness(0.95) blur(0.3px);
+}
+
+@keyframes crtDistort {
+  0% {
+    transform: scale(1.005) skewX(0.4deg) skewY(-0.3deg);
+  }
+  50% {
+    transform: scale(1.007) skewX(-0.4deg) skewY(0.3deg);
+  }
+  100% {
+    transform: scale(1.005) skewX(0.3deg) skewY(-0.4deg);
+  }
+}
+
+audio {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* === Grain Canvas === */
+#grain-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.07;
+}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Track 9</title>
+    <link rel="stylesheet" href="css/track9-style.css" />
+  </head>
+  <body class="fade-in">
+    <div class="track-container">
+      <h1 class="track-title">Track 9: I'll Be Your Mirror</h1>
+
+      <div class="album-wrapper" onclick="toggleTrack()">
+        <img
+          src="images/album9.jpg"
+          alt="Album Art"
+          class="album-art"
+          id="albumImage"
+        />
+        <div class="play-icon" id="playIcon">▶</div>
+      </div>
+
+      <audio id="track-audio" src="audio/audio9.mp3"></audio>
+
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <p>
+        I'll be your mirror serves as a reflection upon the rare relationships
+        in Holden's story that borught him true empathy and happiness. The
+        song's idea of being someone's mirror and reflecting what they truly
+        are, speaks to Holden's search for a person who can truly accept him
+        without judgment and "phoniness."
+      </p>
+
+      <div class="nav-buttons">
+        <button onclick="window.location.href='track8.html'">◀ Previous</button>
+        <button onclick="window.location.href='track10.html'">Next ▶</button>
+      </div>
+    </div>
+
+    <!-- Grain & scanline overlays -->
+    <canvas id="grain-canvas"></canvas>
+    <div class="scanline-overlay"></div>
+
+    <script>
+      let isPlaying = false;
+
+      function toggleTrack() {
+        const audio = document.getElementById("track-audio");
+        const icon = document.getElementById("playIcon");
+
+        if (!audio || !icon) return;
+
+        if (isPlaying) {
+          audio.pause();
+          icon.classList.remove("hidden");
+        } else {
+          audio.volume = 0.6;
+          audio
+            .play()
+            .then(() => {
+              icon.classList.add("hidden");
+            })
+            .catch((err) => {
+              console.warn("Playback error:", err);
+            });
+        }
+
+        isPlaying = !isPlaying;
+      }
+
+      // Progress bar tracking
+      window.addEventListener("DOMContentLoaded", () => {
+        const audio = document.getElementById("track-audio");
+        const progressBar = document.getElementById("progressBar");
+
+        if (audio && progressBar) {
+          audio.addEventListener("timeupdate", () => {
+            const percent = (audio.currentTime / audio.duration) * 100;
+            progressBar.style.width = `${percent}%`;
+          });
+        }
+      });
+
+      // === Grain Effect ===
+      const canvas = document.getElementById("grain-canvas");
+      const ctx = canvas.getContext("2d");
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      function drawGrain() {
+        const imageData = ctx.createImageData(canvas.width, canvas.height);
+        const buffer = new Uint32Array(imageData.data.buffer);
+        const len = buffer.length;
+
+        for (let i = 0; i < len; i++) {
+          if (Math.random() < 0.05) {
+            buffer[i] = 0xffffffff;
+          }
+        }
+
+        ctx.putImageData(imageData, 0, 0);
+      }
+
+      function trackingGlitch() {
+        const y = Math.floor(Math.random() * canvas.height);
+        const height = Math.floor(Math.random() * 10 + 2);
+        const imageData = ctx.getImageData(0, y, canvas.width, height);
+        const shift = Math.floor(Math.random() * 10 - 5);
+        ctx.putImageData(imageData, shift, y);
+      }
+
+      function applyFlicker() {
+        canvas.style.opacity = 0.05 + Math.random() * 0.03;
+      }
+
+      function render() {
+        drawGrain();
+        if (Math.random() < 0.15) trackingGlitch();
+        applyFlicker();
+      }
+
+      setInterval(render, 50);
+    </script>
+  </body>
+</html>

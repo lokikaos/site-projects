@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Holden's Soundtrack</title>
+
+    <!-- Fonts and Styles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@700&display=swap"
+      rel="stylesheet"
+    />
+ 
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body class="fade-in"
+>
+   
+    <div class="content">
+  <h1>The Catcher In The Rye:</h1>
+  <h1 class="subtitle">The Lost Soundtrack</h1>
+    <div class="crt-wrapper">
+      <div class="cassette-wrapper">
+        <img
+src="images/cassette-player-transparent.png"
+          alt="Cassette Player"
+          class="cassette-img"
+        />
+        <button
+          class="invisible-play-button"
+          onclick="startSoundtrack()"
+        ></button>
+      </div>
+    </div>
+
+    <canvas id="grain-canvas"></canvas>
+    <canvas id="scanline-canvas"></canvas>
+<audio id="hiss-audio" src="audio/tape-hiss.mp3" loop></audio>
+    <script src="js/script.js"></script>
+    <div class="scanline-overlay"></div>
+    
+<a href="liner.html" class="liner-button">Liner Notes</a>
+  </body>
+</html>
